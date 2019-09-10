@@ -17,11 +17,27 @@
 #include <TLeafElement.h>
 #include <TLorentzVector.h>
 
-#include "ReducedNtuple.hh"
-#include "SUSYNANOBase.hh"
+//#include "ReducedNtuple.hh"
+//#include "SUSYNANOBase.hh"
+#include "../include/prod2018MC_reducedNANO_Muon.C"
 
 using namespace std;
 using std::vector;
+
+//template function to deal with various tselector
+template<class selectortype>
+void produceReducedTree(selectortype& selector, std::string ofilename){
+	//copy branches to output file	
+	auto ofile =  new TFile(ofilename.c_str(), "RECREATE");
+//	auto reducedTree = selector.fReader.GetTree()->CloneTree();
+	auto reducedTree = selector.fChain->CloneTree();
+	//auto reducedTree = selector.fChain->CloneTree();
+	//reducedTree->Write();
+	//reducedTree->CopyEntries(selector.fReader.GetTree());
+	reducedTree->Write();
+	ofile->Write();
+	ofile->Close();
+}
 
 /// Main function that runs the analysis algorithm on the
 /// specified input files
@@ -38,6 +54,8 @@ int main(int argc, char* argv[]) {
   char FileTag[400];
   char EventCount[400];
 
+  char SelectorClassName[400];
+
   bool DO_FILE = false;
   bool DO_LIST = false;
   bool DO_FOLDER = false;
@@ -50,7 +68,7 @@ int main(int argc, char* argv[]) {
     cout << "  Example:      ./MakeReducedNtuple_NANO.x -ifile=input.root -ofile=output.root -dataset=dataset_name -filetag=sample_tag"  << endl;
     cout << "  Example:      ./MakeReducedNtuple_NANO.x -ilist=input.list -ofile=output.root -dataset=dataset_name -filetag=sample_tag"  << endl;
     cout << "  Example:      ./MakeReducedNtuple_NANO.x -ifold=folder_path -ofile=output.root -dataset=dataset_name -filetag=sample_tag -tree=treename -eventcount=event_count --sms" << endl;
-    
+    cout << " additional tags for object based reduced tree: -selector=TSelector_ClassName "<<endl; 
     return 1;
   }
   for (int i=0;i<argc;i++){
@@ -69,6 +87,9 @@ int main(int argc, char* argv[]) {
     if (strncmp(argv[i],"-tree",5)==0){
       sscanf(argv[i],"-tree=%s",  TreeName);
       DO_TREE = true;
+    } 
+    if (strncmp(argv[i],"-selector",9)==0){
+      sscanf(argv[i],"-selector=%s", SelectorClassName); 
     }
     if (strncmp(argv[i],"-ofile",6)==0) sscanf(argv[i],"-ofile=%s", outputFileName);
     if (strncmp(argv[i],"-dataset",8)==0)   sscanf(argv[i],"-dataset=%s", DataSet);
@@ -130,17 +151,36 @@ int main(int argc, char* argv[]) {
     cout << "   Adding file " << filenames[i] << endl;
   }
 
-  ReducedNtuple<SUSYNANOBase>* ntuple = new ReducedNtuple<SUSYNANOBase>(chain);
 
-  ntuple->AddLabels(string(DataSet),string(FileTag));
-  ntuple->AddEventCountFile(string(EventCount));
+  //use std::string because who would want to use char array
+  std::string _selectorClassName(SelectorClassName);
+  std::string _ofilename(outputFileName);
+  //create appropriate selector class
+  if(_selectorClassName.compare("prod2018MC_reducedNANO_Muon") == 0){
+	std::cout<<"Using selector: "<< _selectorClassName <<std::endl;
+	prod2018MC_reducedNANO_Muon s(chain);
+//	s.Init(chain);
+//	auto event = *(s.event);
+//	int entries = s.fReader.GetEntries();
+//	for(int i =0; i<entries; i++) {	
+//		s.fReader.SetEntry(i);	
+//		std::cout<<event<<" ";
+//	}
 
-  if(DO_SMS)
-    ntuple->DoSMS();
+	produceReducedTree(s,_ofilename);	
+  }
 
-  ntuple->WriteNtuple(string(outputFileName));
+ // ReducedNtuple<SUSYNANOBase>* ntuple = new ReducedNtuple<SUSYNANOBase>(chain);
 
-  delete ntuple;
+ // ntuple->AddLabels(string(DataSet),string(FileTag));
+ // ntuple->AddEventCountFile(string(EventCount));
+
+  //if(DO_SMS)
+   // ntuple->DoSMS();
+
+ // ntuple->WriteNtuple(string(outputFileName));
+
+  //delete ntuple;
  
   return 0;
 

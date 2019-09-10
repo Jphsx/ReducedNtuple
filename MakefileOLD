@@ -18,15 +18,15 @@ GLIBS         += -lRooFit -lRooFitCore
 INCLUDEDIR       = ./include/
 SRCDIR           = ./src/
 CXX	         += -I$(INCLUDEDIR) -I.
-#OUTOBJ	         = ./obj/
+OUTOBJ	         = ./obj/
 
-#CC_FILES := $(wildcard src/*.cc)
+CC_FILES := $(wildcard src/*.cc)
 #HH_FILES := $(wildcard include/*.hh)
-#HH_FILES := $(wildcard include/*.h)
-#OBJ_FILES := $(addprefix $(OUTOBJ),$(notdir $(CC_FILES:.cc=.o)))
+HH_FILES := $(wildcard include/*.h)
+OBJ_FILES := $(addprefix $(OUTOBJ),$(notdir $(CC_FILES:.cc=.o)))
 
 #all: MakeReducedNtuple.x MakeEventCount.x MakeReducedNtuple_NANO.x MakeEventCount_NANO.x
-#all: MakeReducedNtuple_NANO.x
+all: MakeReducedNtuple_NANO.x
 
 #MakeReducedNtuple.x:  $(SRCDIR)MakeReducedNtuple.C $(OBJ_FILES) $(HH_FILES)
 #	$(CXX) $(CXXFLAGS) -o MakeReducedNtuple.x $(OUTOBJ)/*.o $(GLIBS) $ $<
@@ -40,11 +40,8 @@ CXX	         += -I$(INCLUDEDIR) -I.
 #	$(CXX) $(CXXFLAGS) -o MakeReducedNtuple_NANO.x $(OUTOBJ)/*.o $(GLIBS) $ $<
 #	touch MakeReducedNtuple_NANO.x
 
-main: selector.o $(SRCDIR)MakeReducedNtuple_NANO.C
-	g++ -o MakeReducedNtuple.x $(SRCDIR)MakeReducedNtuple_NANO.C `root-config --cflags --libs` 
-
-selector.o: ./include/prod2018MC_reducedNANO_Muon.h ./include/prod2018MC_reducedNANO_Muon.C
-	g++ -c $(INCLUDEDIR)prod2018MC_reducedNANO_Muon.C `root-config --cflags --libs`
+MakeReducedNtuple_NANO.x: $(SRCDIR)MakeReducedNtuple_NANO.C $(HH_FILES)
+	$(CXX) $(CXXFLAGS) -o test.x 
 
 
 #MakeEventCount_NANO.x:  $(SRCDIR)MakeEventCount_NANO.C $(OBJ_FILES) $(HH_FILES)
@@ -56,6 +53,5 @@ selector.o: ./include/prod2018MC_reducedNANO_Muon.h ./include/prod2018MC_reduced
 #	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	#rm -f $(OUTOBJ)*.o 
-	rm *.o
+	rm -f $(OUTOBJ)*.o 
 	rm -f *.x

@@ -1,8 +1,8 @@
 ROOTCFLAGS    = $(shell root-config --cflags)
 ROOTGLIBS     = $(shell root-config --glibs)
 
-RFCFLAGS    = $(shell restframes-config --cxxflags)
-RFGLIBS     = $(shell restframes-config --libs)
+#RFCFLAGS    = $(shell restframes-config --cxxflags)
+#RFGLIBS     = $(shell restframes-config --libs)
 
 CXX            = g++
 
@@ -18,44 +18,37 @@ GLIBS         += -lRooFit -lRooFitCore
 INCLUDEDIR       = ./include/
 SRCDIR           = ./src/
 CXX	         += -I$(INCLUDEDIR) -I.
-#OUTOBJ	         = ./obj/
+OUTOBJ	         = ./obj/
 
-#CC_FILES := $(wildcard src/*.cc)
-#HH_FILES := $(wildcard include/*.hh)
-#HH_FILES := $(wildcard include/*.h)
-#OBJ_FILES := $(addprefix $(OUTOBJ),$(notdir $(CC_FILES:.cc=.o)))
+CC_FILES := $(wildcard src/*.C)
+HH_FILES := $(wildcard include/*.h)
+OBJ_FILES := $(addprefix $(OUTOBJ),$(notdir $(CC_FILES:.C=.o)))
 
-#all: MakeReducedNtuple.x MakeEventCount.x MakeReducedNtuple_NANO.x MakeEventCount_NANO.x
-#all: MakeReducedNtuple_NANO.x
+all: MakeReducedNtuple.x
 
-#MakeReducedNtuple.x:  $(SRCDIR)MakeReducedNtuple.C $(OBJ_FILES) $(HH_FILES)
-#	$(CXX) $(CXXFLAGS) -o MakeReducedNtuple.x $(OUTOBJ)/*.o $(GLIBS) $ $<
-#	touch MakeReducedNtuple.x
+MakeReducedNtuple.x: $(SRCDIR)MakeReducedNtuple_NANO.c $(OBJ_FILES) $(HH_FILES)
+	$(CXX) $(CXXFLAGS) -o MakeReducedNtuple.x $(OUTOBJ)/*.o $(GLIBS) $ $< 
+	touch MakeReducedNtuple.x
 
-#MakeEventCount.x:  $(SRCDIR)MakeEventCount.C $(OBJ_FILES) $(HH_FILES)
-#	$(CXX) $(CXXFLAGS) -o MakeEventCount.x $(OUTOBJ)/*.o $(GLIBS) $ $<
-#	touch MakeEventCount.x
+# MakeReducedNtuple.x:  $(SRCDIR)MakeReducedNtuple.C $(OBJ_FILES) $(HH_FILES)
+# 	$(CXX) $(CXXFLAGS) -o MakeReducedNtuple.x $(OUTOBJ)/*.o $(GLIBS) $ $<
+# 	touch MakeReducedNtuple.x
+
+# MakeEventCount.x:  $(SRCDIR)MakeEventCount.C $(OBJ_FILES) $(HH_FILES)
+# 	$(CXX) $(CXXFLAGS) -o MakeEventCount.x $(OUTOBJ)/*.o $(GLIBS) $ $<
+# 	touch MakeEventCount.x
 
 #MakeReducedNtuple_NANO.x:  $(SRCDIR)MakeReducedNtuple_NANO.C $(OBJ_FILES) $(HH_FILES)
-#	$(CXX) $(CXXFLAGS) -o MakeReducedNtuple_NANO.x $(OUTOBJ)/*.o $(GLIBS) $ $<
-#	touch MakeReducedNtuple_NANO.x
+# 	$(CXX) $(CXXFLAGS) -o MakeReducedNtuple_NANO.x $(OUTOBJ)/*.o $(GLIBS) $ $<
+# 	touch MakeReducedNtuple_NANO.x
 
-main: selector.o $(SRCDIR)MakeReducedNtuple_NANO.C
-	g++ -o MakeReducedNtuple.x $(SRCDIR)MakeReducedNtuple_NANO.C `root-config --cflags --libs` 
+# MakeEventCount_NANO.x:  $(SRCDIR)MakeEventCount_NANO.C $(OBJ_FILES) $(HH_FILES)
+# 	$(CXX) $(CXXFLAGS) -o MakeEventCount_NANO.x $(OUTOBJ)/*.o $(GLIBS) $ $<
+# 	touch MakeEventCount_NANO.x
 
-selector.o: ./include/prod2018MC_reducedNANO_Muon.h ./include/prod2018MC_reducedNANO_Muon.C
-	g++ -c $(INCLUDEDIR)prod2018MC_reducedNANO_Muon.C `root-config --cflags --libs`
-
-
-#MakeEventCount_NANO.x:  $(SRCDIR)MakeEventCount_NANO.C $(OBJ_FILES) $(HH_FILES)
-#	$(CXX) $(CXXFLAGS) -o MakeEventCount_NANO.x $(OUTOBJ)/*.o $(GLIBS) $ $<
-#	touch MakeEventCount_NANO.x
-
-#$(OUTOBJ)%.o: src/%.cc include/%.hh
-#$(OUTOBJ)%.o: include/%.h
-#	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OUTOBJ)%.o: src/%.C include/%.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	#rm -f $(OUTOBJ)*.o 
-	rm *.o
+	rm -f $(OUTOBJ)*.o 
 	rm -f *.x

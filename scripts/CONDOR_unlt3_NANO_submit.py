@@ -10,7 +10,7 @@ home = os.environ['HOME']
 RUN_DIR = pwd
 TEMP = pwd
 #EXE  = "MakeReducedNtuple_NANO.x"
-EXE  = "MakeEventCount_NANO.x"
+EXE  = "MakeEventCount.x"
 TREE = "Events"
 #OUT  = "/home/t3-ku/crogan/NTUPLES/Processing/"
 OUT = pwd
@@ -123,10 +123,10 @@ if __name__ == "__main__":
     os.system("mkdir -p "+srcdir)
 
     # make EventCount file and folder
-    evtcntdir  = TARGET+"evtcnt/"
-    os.system("mkdir -p "+evtcntdir)
-    os.system("hadd "+evtcntdir+"EventCount.root root/EventCount/*.root")
-    evtcnt = evtcntdir+"EventCount.root"
+   # evtcntdir  = TARGET+"evtcnt/"
+   # os.system("mkdir -p "+evtcntdir)
+   # os.system("hadd "+evtcntdir+"EventCount.root root/EventCount/*.root")
+   # evtcnt = evtcntdir+"EventCount.root"
     
     # output root files
     ROOT = OUT+"/"+NAME+"/"

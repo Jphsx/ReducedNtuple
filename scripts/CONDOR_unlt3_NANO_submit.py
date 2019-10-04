@@ -45,7 +45,7 @@ def create_filelist(rootlist, dataset, filetag):
 
     return listlist
 
-def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag,evtcnt):
+def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag):
     fsrc = open(srcfile,'w')
     fsrc.write('universe = vanilla \n')
     fsrc.write('executable = '+EXE+" \n")
@@ -59,7 +59,7 @@ def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag,evtcnt):
         fsrc.write('--sms ')
     fsrc.write('-dataset='+dataset+" ")
     fsrc.write('-filetag='+filetag+" ")
-    fsrc.write('-eventcount='+evtcnt+" \n")
+   # fsrc.write('-eventcount='+evtcnt+" \n")
     fsrc.write('output = '+lfile+"_out.log \n")
     fsrc.write('error = '+lfile+"_err.log \n")
     fsrc.write('log = '+lfile+"_log.log \n")
@@ -146,6 +146,7 @@ if __name__ == "__main__":
 
         for flist in inputlist:
             flist = flist.strip('\n\r')
+	    if (len(flist)==0 or flist[0][0]=='#'): continue
             print "Processing list from %s" % flist
 
             listfile = LIST
@@ -190,7 +191,7 @@ if __name__ == "__main__":
             filename = f.split("/")
             filename = filename[-1]
             name = filename.replace(".list",'')
-            write_sh(srcdir+name+".sh",f,ROOT+dataset+"_"+filetag+"/"+name+".root",logdir+name,dataset,filetag,evtcnt)
+            write_sh(srcdir+name+".sh",f,ROOT+dataset+"_"+filetag+"/"+name+".root",logdir+name,dataset,filetag)
             os.system('condor_submit '+srcdir+name+".sh")
             
     

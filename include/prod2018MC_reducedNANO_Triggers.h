@@ -2707,7 +2707,7 @@ fChain->SetBranchStatus("*", 0);
    // fChain->SetBranchAddress("Muon_dxyErr", Muon_dxyErr, &b_Muon_dxyErr);
    // fChain->SetBranchAddress("Muon_dz", Muon_dz, &b_Muon_dz);
    // fChain->SetBranchAddress("Muon_dzErr", Muon_dzErr, &b_Muon_dzErr);
-   // fChain->SetBranchAddress("Muon_eta", Muon_eta, &b_Muon_eta);
+   fChain->SetBranchAddress("Muon_eta", Muon_eta, &b_Muon_eta);
    // fChain->SetBranchAddress("Muon_ip3d", Muon_ip3d, &b_Muon_ip3d);
    // fChain->SetBranchAddress("Muon_jetRelIso", Muon_jetRelIso, &b_Muon_jetRelIso);
    // fChain->SetBranchAddress("Muon_mass", Muon_mass, &b_Muon_mass);

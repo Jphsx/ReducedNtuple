@@ -103,6 +103,10 @@ int main(int argc, char* argv[]) {
     if (strncmp(argv[i],"-selector",9)==0){
       sscanf(argv[i],"-selector=%s", SelectorClassName); 
     }
+    if ( strncmp(argv[i],"-selector",9)!=0){ 
+      cout << "Error: no selector specified." << endl;
+      return 1;
+    }
     if (strncmp(argv[i],"-ofile",6)==0) sscanf(argv[i],"-ofile=%s", outputFileName);
     if (strncmp(argv[i],"-dataset",8)==0)   sscanf(argv[i],"-dataset=%s", DataSet);
     if (strncmp(argv[i],"-filetag",8)==0)   sscanf(argv[i],"-filetag=%s", FileTag);

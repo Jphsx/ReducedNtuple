@@ -102,7 +102,7 @@ if __name__ == "__main__":
     if '-selector' in sys.argv:
         p = sys.argv.index('-selector')
         SELECTOR = sys.argv [p+1]
-        argv_post += 2  
+        argv_pos += 2  
 
     print "maxN is %d" % MAXN
 

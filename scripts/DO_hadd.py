@@ -30,9 +30,9 @@ if __name__ == "__main__":
 
     for dirs in os.walk(IN_DIR):
         target = dirs[0].split("/")
-        target = target[-1]
-        print target
-        haddcmd = "hadd "+OUT_DIR+"/"+target+".root "
-        haddcmd += IN_DIR+"/"+target+"/*.root"
+        target = target[-2]
+        print "target: ", target
+	haddcmd = "hadd "+OUT_DIR+target+".root "
+        haddcmd += IN_DIR+"/*.root"
         print haddcmd
         os.system(haddcmd)

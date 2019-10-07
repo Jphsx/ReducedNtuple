@@ -17,6 +17,7 @@ OUT = pwd
 LIST = "default.list"
 QUEUE = ""
 MAXN = 20
+SELECTOR = ""
 
 def new_listfile(rootlist, listfile):
     mylist = open(listfile,'w')
@@ -55,6 +56,7 @@ def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag):
     fsrc.write('-ilist='+ifile+" ")
     fsrc.write('-ofile='+ofile+" ")
     fsrc.write('-tree='+TREE+" ")
+    fsrc.write('-selector='+SELECTOR+" ")
     if DO_SMS == 1:
         fsrc.write('--sms ')
     fsrc.write('-dataset='+dataset+" ")
@@ -69,8 +71,8 @@ def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag):
     fsrc.close()
 
 if __name__ == "__main__":
-    if not len(sys.argv) > 1 or '-h' in sys.argv or '--help' in sys.argv:
-        print "Usage: %s [-q queue] [-tree treename] [-list listfile.list] [-maxN N] [--sms]" % sys.argv[0]
+    if not len(sys.argv) > 3 or '-h' in sys.argv or '--help' in sys.argv:
+        print "Usage: %s [-list listfile.list] [-selector selector class name] optional: [-q queue] [-tree treename] [-maxN N] [--sms]" % sys.argv[0]
         print
         sys.exit(1)
 
@@ -96,6 +98,11 @@ if __name__ == "__main__":
     if '--sms' in sys.argv:
         DO_SMS = 1
         argv_pos += 1
+
+    if '-selector' in sys.argv:
+        p = sys.argv.index('-selector')
+        SELECTOR = sys.argv [p+1]
+        argv_post += 2  
 
     print "maxN is %d" % MAXN
 

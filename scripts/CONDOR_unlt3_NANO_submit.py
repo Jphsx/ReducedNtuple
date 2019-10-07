@@ -9,7 +9,7 @@ home = os.environ['HOME']
 #######################################
 RUN_DIR = pwd
 TEMP = pwd
-EXE  = "MakeReducedNtuple_NANO.x"
+EXE  = "MakeReducedNtuple.x"
 #EXE  = "MakeEventCount.x"
 TREE = "Events"
 #OUT  = "/home/t3-ku/crogan/NTUPLES/Processing/"
@@ -58,8 +58,8 @@ def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag):
     if DO_SMS == 1:
         fsrc.write('--sms ')
     fsrc.write('-dataset='+dataset+" ")
-    fsrc.write('-filetag='+filetag+" ")
-   # fsrc.write('-eventcount='+evtcnt+" \n")
+    fsrc.write('-filetag='+filetag+" \n")
+    #fsrc.write('-eventcount='+evtcnt+" \n")
     fsrc.write('output = '+lfile+"_out.log \n")
     fsrc.write('error = '+lfile+"_err.log \n")
     fsrc.write('log = '+lfile+"_log.log \n")

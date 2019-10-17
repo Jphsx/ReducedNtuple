@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import os, sys, commands, time
+import DO_hadd
 
 #look for the current directory
 #######################################
@@ -200,5 +201,7 @@ if __name__ == "__main__":
             name = filename.replace(".list",'')
             write_sh(srcdir+name+".sh",f,ROOT+dataset+"_"+filetag+"/"+name+".root",logdir+name,dataset,filetag)
             os.system('condor_submit '+srcdir+name+".sh")
-            
-    
+
+
+
+

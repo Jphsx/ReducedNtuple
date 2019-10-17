@@ -74,9 +74,9 @@ int main(int argc, char* argv[]) {
   bool DO_TREE = false;
   bool DO_SMS = false;
 
-  if ( argc < 2 ){
+  if ( argc < 4 ){
     cout << "Error at Input: please specify an input file name, a list of input ROOT files and/or a folder path"; 
-    cout << " and an output filename:" << endl; 
+    cout << " , an output filename, and a selector class name:" << endl; 
     cout << "  Example:      ./MakeReducedNtuple_NANO.x -ifile=input.root -ofile=output.root -dataset=dataset_name -filetag=sample_tag"  << endl;
     cout << "  Example:      ./MakeReducedNtuple_NANO.x -ilist=input.list -ofile=output.root -dataset=dataset_name -filetag=sample_tag"  << endl;
     cout << "  Example:      ./MakeReducedNtuple_NANO.x -ifold=folder_path -ofile=output.root -dataset=dataset_name -filetag=sample_tag -tree=treename -eventcount=event_count --sms" << endl;
@@ -109,6 +109,7 @@ int main(int argc, char* argv[]) {
     if (strncmp(argv[i],"-eventcount",11)==0)   sscanf(argv[i],"-eventcount=%s", EventCount);
     if (strncmp(argv[i],"--sms",5)==0)  DO_SMS = true;
   }
+
 
   gROOT->ProcessLine("#include <vector>");
 

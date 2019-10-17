@@ -60,7 +60,7 @@ public :
    // Float_t         Electron_dzErr[6];   //[nElectron]
    // Float_t         Electron_eInvMinusPInv[6];   //[nElectron]
    // Float_t         Electron_energyErr[6];   //[nElectron]
-   // Float_t         Electron_eta[6];   //[nElectron]
+   Float_t         Electron_eta[6];   //[nElectron]
    // Float_t         Electron_hoe[6];   //[nElectron]
    // Float_t         Electron_ip3d[6];   //[nElectron]
    // Float_t         Electron_jetRelIso[6];   //[nElectron]
@@ -73,8 +73,8 @@ public :
    // Float_t         Electron_mvaFall17V2noIso[6];   //[nElectron]
    // Float_t         Electron_pfRelIso03_all[6];   //[nElectron]
    // Float_t         Electron_pfRelIso03_chg[6];   //[nElectron]
-   // Float_t         Electron_phi[6];   //[nElectron]
-   // Float_t         Electron_pt[6];   //[nElectron]
+   Float_t         Electron_phi[6];   //[nElectron]
+   Float_t         Electron_pt[6];   //[nElectron]
    // Float_t         Electron_r9[6];   //[nElectron]
    // Float_t         Electron_sieie[6];   //[nElectron]
    // Float_t         Electron_sip3d[6];   //[nElectron]
@@ -283,7 +283,7 @@ public :
    // Float_t         Muon_dxyErr[5];   //[nMuon]
    // Float_t         Muon_dz[5];   //[nMuon]
    // Float_t         Muon_dzErr[5];   //[nMuon]
-   // Float_t         Muon_eta[5];   //[nMuon]
+   Float_t         Muon_eta[5];   //[nMuon]
    // Float_t         Muon_ip3d[5];   //[nMuon]
    // Float_t         Muon_jetRelIso[5];   //[nMuon]
    // Float_t         Muon_mass[5];   //[nMuon]
@@ -292,8 +292,8 @@ public :
    // Float_t         Muon_pfRelIso03_all[5];   //[nMuon]
    // Float_t         Muon_pfRelIso03_chg[5];   //[nMuon]
    // Float_t         Muon_pfRelIso04_all[5];   //[nMuon]
-   // Float_t         Muon_phi[5];   //[nMuon]
-   // Float_t         Muon_pt[5];   //[nMuon]
+   Float_t         Muon_phi[5];   //[nMuon]
+   Float_t         Muon_pt[5];   //[nMuon]
    // Float_t         Muon_ptErr[5];   //[nMuon]
    // Float_t         Muon_segmentComp[5];   //[nMuon]
    // Float_t         Muon_sip3d[5];   //[nMuon]
@@ -1237,7 +1237,7 @@ public :
    // TBranch        *b_Electron_dzErr;   //!
    // TBranch        *b_Electron_eInvMinusPInv;   //!
    // TBranch        *b_Electron_energyErr;   //!
-   // TBranch        *b_Electron_eta;   //!
+   TBranch        *b_Electron_eta;   //!
    // TBranch        *b_Electron_hoe;   //!
    // TBranch        *b_Electron_ip3d;   //!
    // TBranch        *b_Electron_jetRelIso;   //!
@@ -1250,8 +1250,8 @@ public :
    // TBranch        *b_Electron_mvaFall17V2noIso;   //!
    // TBranch        *b_Electron_pfRelIso03_all;   //!
    // TBranch        *b_Electron_pfRelIso03_chg;   //!
-   // TBranch        *b_Electron_phi;   //!
-   // TBranch        *b_Electron_pt;   //!
+   TBranch        *b_Electron_phi;   //!
+   TBranch        *b_Electron_pt;   //!
    // TBranch        *b_Electron_r9;   //!
    // TBranch        *b_Electron_sieie;   //!
    // TBranch        *b_Electron_sip3d;   //!
@@ -1460,7 +1460,7 @@ public :
    // TBranch        *b_Muon_dxyErr;   //!
    // TBranch        *b_Muon_dz;   //!
    // TBranch        *b_Muon_dzErr;   //!
-   // TBranch        *b_Muon_eta;   //!
+   TBranch        *b_Muon_eta;   //!
    // TBranch        *b_Muon_ip3d;   //!
    // TBranch        *b_Muon_jetRelIso;   //!
    // TBranch        *b_Muon_mass;   //!
@@ -1469,8 +1469,8 @@ public :
    // TBranch        *b_Muon_pfRelIso03_all;   //!
    // TBranch        *b_Muon_pfRelIso03_chg;   //!
    // TBranch        *b_Muon_pfRelIso04_all;   //!
-   // TBranch        *b_Muon_phi;   //!
-   // TBranch        *b_Muon_pt;   //!
+   TBranch        *b_Muon_phi;   //!
+   TBranch        *b_Muon_pt;   //!
    // TBranch        *b_Muon_ptErr;   //!
    // TBranch        *b_Muon_segmentComp;   //!
    // TBranch        *b_Muon_sip3d;   //!
@@ -2484,7 +2484,7 @@ fChain->SetBranchStatus("*", 0);
    // fChain->SetBranchAddress("Electron_dzErr", Electron_dzErr, &b_Electron_dzErr);
    // fChain->SetBranchAddress("Electron_eInvMinusPInv", Electron_eInvMinusPInv, &b_Electron_eInvMinusPInv);
    // fChain->SetBranchAddress("Electron_energyErr", Electron_energyErr, &b_Electron_energyErr);
-   // fChain->SetBranchAddress("Electron_eta", Electron_eta, &b_Electron_eta);
+   fChain->SetBranchAddress("Electron_eta", Electron_eta, &b_Electron_eta);
    // fChain->SetBranchAddress("Electron_hoe", Electron_hoe, &b_Electron_hoe);
    // fChain->SetBranchAddress("Electron_ip3d", Electron_ip3d, &b_Electron_ip3d);
    // fChain->SetBranchAddress("Electron_jetRelIso", Electron_jetRelIso, &b_Electron_jetRelIso);
@@ -2497,8 +2497,8 @@ fChain->SetBranchStatus("*", 0);
    // fChain->SetBranchAddress("Electron_mvaFall17V2noIso", Electron_mvaFall17V2noIso, &b_Electron_mvaFall17V2noIso);
    // fChain->SetBranchAddress("Electron_pfRelIso03_all", Electron_pfRelIso03_all, &b_Electron_pfRelIso03_all);
    // fChain->SetBranchAddress("Electron_pfRelIso03_chg", Electron_pfRelIso03_chg, &b_Electron_pfRelIso03_chg);
-   // fChain->SetBranchAddress("Electron_phi", Electron_phi, &b_Electron_phi);
-   // fChain->SetBranchAddress("Electron_pt", Electron_pt, &b_Electron_pt);
+   fChain->SetBranchAddress("Electron_phi", Electron_phi, &b_Electron_phi);
+   fChain->SetBranchAddress("Electron_pt", Electron_pt, &b_Electron_pt);
    // fChain->SetBranchAddress("Electron_r9", Electron_r9, &b_Electron_r9);
    // fChain->SetBranchAddress("Electron_sieie", Electron_sieie, &b_Electron_sieie);
    // fChain->SetBranchAddress("Electron_sip3d", Electron_sip3d, &b_Electron_sip3d);
@@ -2707,7 +2707,7 @@ fChain->SetBranchStatus("*", 0);
    // fChain->SetBranchAddress("Muon_dxyErr", Muon_dxyErr, &b_Muon_dxyErr);
    // fChain->SetBranchAddress("Muon_dz", Muon_dz, &b_Muon_dz);
    // fChain->SetBranchAddress("Muon_dzErr", Muon_dzErr, &b_Muon_dzErr);
-   // fChain->SetBranchAddress("Muon_eta", Muon_eta, &b_Muon_eta);
+   fChain->SetBranchAddress("Muon_eta", Muon_eta, &b_Muon_eta);
    // fChain->SetBranchAddress("Muon_ip3d", Muon_ip3d, &b_Muon_ip3d);
    // fChain->SetBranchAddress("Muon_jetRelIso", Muon_jetRelIso, &b_Muon_jetRelIso);
    // fChain->SetBranchAddress("Muon_mass", Muon_mass, &b_Muon_mass);
@@ -2716,8 +2716,8 @@ fChain->SetBranchStatus("*", 0);
    // fChain->SetBranchAddress("Muon_pfRelIso03_all", Muon_pfRelIso03_all, &b_Muon_pfRelIso03_all);
    // fChain->SetBranchAddress("Muon_pfRelIso03_chg", Muon_pfRelIso03_chg, &b_Muon_pfRelIso03_chg);
    // fChain->SetBranchAddress("Muon_pfRelIso04_all", Muon_pfRelIso04_all, &b_Muon_pfRelIso04_all);
-   // fChain->SetBranchAddress("Muon_phi", Muon_phi, &b_Muon_phi);
-   // fChain->SetBranchAddress("Muon_pt", Muon_pt, &b_Muon_pt);
+   fChain->SetBranchAddress("Muon_phi", Muon_phi, &b_Muon_phi);
+   fChain->SetBranchAddress("Muon_pt", Muon_pt, &b_Muon_pt);
    // fChain->SetBranchAddress("Muon_ptErr", Muon_ptErr, &b_Muon_ptErr);
    // fChain->SetBranchAddress("Muon_segmentComp", Muon_segmentComp, &b_Muon_segmentComp);
    // fChain->SetBranchAddress("Muon_sip3d", Muon_sip3d, &b_Muon_sip3d);

@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import os, sys, commands, time
+import DO_hadd
 
 #look for the current directory
 #######################################
@@ -9,14 +10,15 @@ home = os.environ['HOME']
 #######################################
 RUN_DIR = pwd
 TEMP = pwd
-#EXE  = "MakeReducedNtuple_NANO.x"
-EXE  = "MakeEventCount.x"
+EXE  = "MakeReducedNtuple.x"
+#EXE  = "MakeEventCount.x"
 TREE = "Events"
 #OUT  = "/home/t3-ku/crogan/NTUPLES/Processing/"
 OUT = pwd
 LIST = "default.list"
 QUEUE = ""
 MAXN = 20
+SELECTOR = ""
 
 def new_listfile(rootlist, listfile):
     mylist = open(listfile,'w')
@@ -45,7 +47,7 @@ def create_filelist(rootlist, dataset, filetag):
 
     return listlist
 
-def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag,evtcnt):
+def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag):
     fsrc = open(srcfile,'w')
     fsrc.write('universe = vanilla \n')
     fsrc.write('executable = '+EXE+" \n")
@@ -55,11 +57,12 @@ def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag,evtcnt):
     fsrc.write('-ilist='+ifile+" ")
     fsrc.write('-ofile='+ofile+" ")
     fsrc.write('-tree='+TREE+" ")
+    fsrc.write('-selector='+SELECTOR+" ")
     if DO_SMS == 1:
         fsrc.write('--sms ')
     fsrc.write('-dataset='+dataset+" ")
-    fsrc.write('-filetag='+filetag+" ")
-    fsrc.write('-eventcount='+evtcnt+" \n")
+    fsrc.write('-filetag='+filetag+" \n")
+    #fsrc.write('-eventcount='+evtcnt+" \n")
     fsrc.write('output = '+lfile+"_out.log \n")
     fsrc.write('error = '+lfile+"_err.log \n")
     fsrc.write('log = '+lfile+"_log.log \n")
@@ -69,8 +72,8 @@ def write_sh(srcfile,ifile,ofile,lfile,dataset,filetag,evtcnt):
     fsrc.close()
 
 if __name__ == "__main__":
-    if not len(sys.argv) > 1 or '-h' in sys.argv or '--help' in sys.argv:
-        print "Usage: %s [-q queue] [-tree treename] [-list listfile.list] [-maxN N] [--sms]" % sys.argv[0]
+    if not len(sys.argv) > 3 or '-h' in sys.argv or '--help' in sys.argv:
+        print "Usage: %s [-list listfile.list] [-selector selector class name] optional: [-q queue] [-tree treename] [-maxN N] [--sms]" % sys.argv[0]
         print
         sys.exit(1)
 
@@ -96,6 +99,11 @@ if __name__ == "__main__":
     if '--sms' in sys.argv:
         DO_SMS = 1
         argv_pos += 1
+
+    if '-selector' in sys.argv:
+        p = sys.argv.index('-selector')
+        SELECTOR = sys.argv [p+1]
+        argv_pos += 2  
 
     print "maxN is %d" % MAXN
 
@@ -146,6 +154,7 @@ if __name__ == "__main__":
 
         for flist in inputlist:
             flist = flist.strip('\n\r')
+	    if (len(flist)==0 or flist[0][0]=='#'): continue
             print "Processing list from %s" % flist
 
             listfile = LIST
@@ -190,7 +199,9 @@ if __name__ == "__main__":
             filename = f.split("/")
             filename = filename[-1]
             name = filename.replace(".list",'')
-            write_sh(srcdir+name+".sh",f,ROOT+dataset+"_"+filetag+"/"+name+".root",logdir+name,dataset,filetag,evtcnt)
+            write_sh(srcdir+name+".sh",f,ROOT+dataset+"_"+filetag+"/"+name+".root",logdir+name,dataset,filetag)
             os.system('condor_submit '+srcdir+name+".sh")
-            
-    
+
+
+
+
